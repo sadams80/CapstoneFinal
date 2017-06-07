@@ -1,0 +1,73 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "ViewUserByUserId";
+}
+
+<h2>View Account</h2>
+<br />
+
+@if (Session["UserId"] != null)
+{
+    if (TempData["AdminDelete"] != null)
+    {
+        <p><font color="red">@TempData["AdminDelete"].ToString()</font></p>
+    }
+    <table class="table" tableFormat>
+        <tr>
+            <th colspan="2" align="center">Account For: @Html.DisplayFor(m => m.SingleUser.Username)</th>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>@Html.DisplayFor(m => m.SingleUser.FirstName)</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>@Html.DisplayFor(m => m.SingleUser.LastName)</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>@Html.DisplayFor(m => m.SingleUser.Age)</td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>@Html.DisplayFor(m => m.SingleUser.Gender)</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@Html.DisplayFor(m => m.SingleUser.Email)</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>@Html.DisplayFor(m => m.SingleUser.Username)</td>
+        </tr>
+        <tr>
+            <td>House</td>
+            @if (Model.SingleUser.House_ID == 1)
+            {
+                <td>Gryffindor</td>
+            }
+            @if (Model.SingleUser.House_ID == 2)
+            {
+                <td>Slytherin</td>
+            }
+            @if (Model.SingleUser.House_ID == 3)
+            {
+                <td>Ravenclaw</td>
+            }
+            @if (Model.SingleUser.House_ID == 4)
+            {
+                <td>Hufflepuff</td>
+            }
+        </tr>
+    </table>
+
+    <br />
+    <div>
+        @Html.ActionLink("Edit Account", "UpdateUser", "Users", routeValues: new { userId = (int)Session["UserId"] }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+        @if ((int)TempData["UserRole"] != 3)
+        {
+        @Html.ActionLink("Delete Account", "DeleteUser", "Users", routeValues: new { userId = (int)Session["UserId"] }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+        }
+    </div>
+}

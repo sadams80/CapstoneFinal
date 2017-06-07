@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<div id="backgroundmap">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" style="font-size: 16px">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Main Menu <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home", null, new { id = "item 1" })</li>
+                            @if (Session["RoleID"] != null)
+                            {
+
+
+                                <li>@Html.ActionLink("House Points", "ViewHouses", "Houses", null, new { id = "item 2" })</li>
+                                if ((int)Session["RoleID"] != 1)
+                                {
+                                    <li>@Html.ActionLink("Create Craft", "CreateCraft", "Crafts", null, new { id = "item 3" })</li>
+                                }
+                                <li>@Html.ActionLink("Create Project", "CreateProject", "Projects", null, new { id = "item 4" })</li>
+                                if ((int)Session["RoleID"] == 3)
+                                {
+                                    <li>@Html.ActionLink("View Users", "ViewAllUsers", "Users", null, new { id = "item 5" })</li>
+                                }
+                                <li>@Html.ActionLink("View Crafts", "ViewAllCrafts", "Crafts", null, new { id = "item 6" })</li>
+                                <li>@Html.ActionLink("View Projects", "ViewProjects", "Projects", null, new { id = "item 7" })</li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        @if (Session["RoleId"] != null)
+            {
+                            <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Account Menu <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("My Information", "ViewUserByUserId", "Users", null, new { id = "item 1" })</li>
+                            </ul>
+                        }
+                    </li>
+                </ul>
+                @if (Session["RoleID"] == null)
+            {
+                    <div style="float:right">
+                        @Html.ActionLink("Register", "CreateUser", "Users", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Login", "Login", "Users", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                }
+                @if (Session["RoleId"] != null)
+            {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown" style="color:burlywood">Hey @Session["Username"]! <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="active"> @Html.ActionLink("Logout", "Logout", "Users")</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="page-header">
+            <div class="housebanner">
+                @if (Session["RoleId"] != null)
+            {
+                if ((int)Session["House_ID"] == 1)
+                {
+                        <div id="gryffindor">
+
+                        </div>
+                    }
+                    else if ((int)Session["House_ID"] == 2)
+                    {
+                        <div id="slytherin">
+
+                        </div>
+                    }
+                    else if ((int)Session["House_ID"] == 3)
+                    {
+                        <div id="ravenclaw">
+
+                        </div>
+
+                    }
+                    else if ((int)Session["House_ID"] == 4)
+                    {
+                        <div id="hufflepuff">
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="hogwarts">
+
+                        </div>
+                    }
+
+                }
+                @if (Session["RoleId"] == null)
+            {
+                    <div id="hogwarts">
+
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <div class="container body-content">
+
+            @RenderBody()
+
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+
+        </div>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+
+    </body>
+</div>
+</html>

@@ -1,0 +1,37 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<br />
+@using (Html.BeginForm("Login", "Users", FormMethod.Post))
+{
+    if (TempData["LoginError"] != null)
+    {
+        <p><font color="red">@TempData["LoginError"].ToString()</font></p>
+    }
+    if (TempData["UserCreateSuccess"] != null)
+    {
+        <h4><font color="red">@TempData["UserCreateSuccess"].ToString()</font></h4>
+    }
+    if (TempData["DeleteSuccess"] != null)
+    {
+        <h4><font color="red">@TempData["DeleteSuccess"].ToString()</font></h4>
+    }
+<div>
+    <div>
+        @Html.LabelFor(m => m.SingleUser.Username, new { @class = "LabelFormat" })
+        @Html.TextBoxFor(m => m.SingleUser.Username, new { @class = "form-control TextboxFormat" })
+        @Html.ValidationMessageFor(m => m.SingleUser.Username)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.SingleUser.Password, new { @class = "LabelFormat" })
+        @Html.PasswordFor(m => m.SingleUser.Password, new { @class = "form-control TextboxFormat" })
+        @Html.ValidationMessageFor(m => m.SingleUser.Password)
+    </div>
+    <br />
+    <input type="submit" value="Login"/>
+</div>
+}

@@ -1,0 +1,113 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "UpdateUser";
+}
+
+<h2>Update Account Information</h2>
+<br />
+<br />
+@using (Html.BeginForm("UpdateUser", "Users", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.SingleUser.User_ID)
+    if (TempData["UsernameError"] != null)
+    {
+        <p><font color="red">@TempData["UsernameError"].ToString()</font></p>
+    }
+    if (TempData["UpdateError"] != null)
+    {
+        <p><font color="red">@TempData["UpdateError"].ToString()</font></p>
+    }
+    <div>
+        <p>Please re-enter the following information.</p>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.FirstName, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.FirstName, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.FirstName)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.LastName, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.LastName, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.LastName)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Age, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Age, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Age)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Gender, new { @class = "LabelFormat" })
+            @{
+                List<SelectListItem> genderItems = new List<SelectListItem>();
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "",
+                    Value = ""
+                });
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "Female",
+                    Value = "Female"
+                });
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "Male",
+                    Value = "Male"
+                });
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "Other",
+                    Value = "Other"
+                });
+            }
+            @Html.DropDownListFor(m => m.SingleUser.Gender, genderItems, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Gender)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Email, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Email, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Email)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Username, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Username, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Username)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Password, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Password, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Password)
+        </div>
+        <div>
+            @if ((int)Session["RoleID"] != 3)
+            {
+                @Html.HiddenFor(m => m.SingleUser.Role_ID)
+            }
+            @if ((int)Session["RoleID"] == 3)
+            {
+                @Html.LabelFor(m => m.SingleUser.Role_ID, new { @class = "LabelFormat" })
+
+                List<SelectListItem> userRoles = new List<SelectListItem>();
+                userRoles.Add(new SelectListItem
+                {
+                    Text = ""
+                });
+                foreach (MyCraftProjectSharingApp.Models.Roles role in Model.Roles)
+                {
+                    userRoles.Add(new SelectListItem
+                    {
+                        Text = role.RoleName,
+                        Value = role.Role_ID.ToString()
+                    });
+                }
+                @Html.DropDownListFor(m => m.SingleUser.Role_ID, userRoles, new { @class = "form-control TextboxFormat" })
+            }
+
+        </div>
+
+        <br />
+
+        <input type="submit" value="Update" />
+
+    </div>
+                }

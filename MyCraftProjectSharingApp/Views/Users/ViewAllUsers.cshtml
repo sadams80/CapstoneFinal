@@ -1,0 +1,75 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "ViewAllUsers";
+}
+
+
+<h2>Users</h2>
+<br />
+@if (Session["RoleID"] != null)
+{
+    if ((int)Session["RoleID"] == 3)
+    {
+        if (TempData["AdminDelete"] != null)
+        {
+            <p><font color="red">@TempData["AdminDelete"].ToString()</font></p>
+        }
+        <table class="table" tableFormat>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>House</th>
+                <th>User Type</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (Users user in Model.Users)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => user.FirstName)</td>
+                    <td>@Html.DisplayFor(m => user.LastName)</td>
+                    <td>@Html.DisplayFor(m => user.Age)</td>
+                    <td>@Html.DisplayFor(m => user.Gender)</td>
+                    <td>@Html.DisplayFor(m => user.Email)</td>
+                    <td>@Html.DisplayFor(m => user.Username)</td>
+                    @*<td>@Html.DisplayFor(m => user.HouseName)</td>*@
+                    @if (user.House_ID == 1)
+                    {
+                        <td>Gryffindor</td>
+                    }
+                    @if (user.House_ID == 2)
+                    {
+                        <td>Slytherin</td>
+                    }
+                    @if (user.House_ID == 3)
+                    {
+                        <td>Ravenclaw</td>
+                    }
+                    @if (user.House_ID == 4)
+                    {
+                        <td>Hufflepuff</td>
+                    }
+                    @if (user.Role_ID == 1)
+                    {
+                        <td>Regular</td>
+                    }
+                    @if (user.Role_ID == 2)
+                    {
+                        <td>Power</td>
+                    }
+                    @if (user.Role_ID == 3)
+                    {
+                        <td>Admin</td>
+                    }
+                    <td>@Html.ActionLink("Edit", "UpdateUser", "Users", routeValues: new { userId = user.User_ID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                    <td>@Html.ActionLink("Remove", "DeleteUser", "Users", routeValues: new { userId = user.User_ID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                </tr>
+            }
+        </table>
+    }
+}

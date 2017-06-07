@@ -1,0 +1,45 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "ViewAllCrafts";
+}
+
+<h2>Crafts</h2>
+
+@if (Session["RoleID"] != null)
+{
+    if (TempData["CraftSuccess"] != null)
+    {
+        <p><font color="red">@TempData["CraftSuccess"].ToString()</font></p>
+    }
+    if (TempData["CraftError"] != null)
+    {
+        <p><font color="red">@TempData["CraftError"].ToString()</font></p>
+    }
+    if (TempData["DeleteSuccess"] != null)
+    {
+        <p><font color="red">@TempData["DeleteSuccess"].ToString()</font></p>
+    }
+    <table class="table" tableFormat>
+        <tr>
+            <th>Creator</th>
+            <th>Craft name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (Crafts craft in Model.Crafts)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => craft.Username)</td>
+                <td>@Html.DisplayFor(m => craft.CraftName)</td>
+                <td>@Html.DisplayFor(m => craft.Description)</td>
+                @if ((int)Session["RoleID"] == 3 || (int)Session["UserId"] == craft.User_ID)
+                {
+                    <td>@Html.ActionLink("Edit", "UpdateCraft", "Crafts", routeValues: new { craftToUpdate = craft.Craft_ID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                    <td>@Html.ActionLink("Delete", "DeleteCraft", "Crafts", routeValues: new { craftToDelete = craft.Craft_ID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                }
+            </tr>
+        }
+    </table>
+}

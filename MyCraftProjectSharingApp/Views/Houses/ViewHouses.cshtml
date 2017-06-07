@@ -1,0 +1,26 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "ViewHouses";
+}
+<div class="text-center">
+    <h2>House Hourglasses</h2>
+</div>
+<br />
+<div id="hourglassimage">
+    </div>
+<br />
+
+<table class="table" tableFormat>
+    @foreach (Houses house in Model.Houses)
+    {
+        <tr>
+            <th>@Html.DisplayFor(m => house.HouseName)</th>
+            <th>Points</th>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(m => house.Motto)</td>
+            <td>@Html.DisplayFor(m => house.Points)</td>
+        </tr>
+    }
+</table>

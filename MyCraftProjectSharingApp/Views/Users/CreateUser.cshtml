@@ -1,0 +1,130 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register as a User</h2>
+<br />
+<br />
+@using (Html.BeginForm("CreateUser", "Users", FormMethod.Post))
+{
+    if (TempData["UsernameError"] != null)
+    {
+        <p><font color="red">@TempData["UsernameError"].ToString()</font></p>
+    }
+    if (TempData["CreateError"] != null)
+    {
+        <p><font color="red">@TempData["CreateError"].ToString()</font></p>
+    }
+    <div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.FirstName, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.FirstName, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.FirstName)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.LastName, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.LastName, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.LastName)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Age, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Age, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Age)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Gender, new { @class = "LabelFormat" })
+            @{
+                List<SelectListItem> genderItems = new List<SelectListItem>();
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "",
+                    Value = ""
+                });
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "Female",
+                    Value = "Female"
+                });
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "Male",
+                    Value = "Male"
+                });
+                genderItems.Add(new SelectListItem
+                {
+                    Text = "Other",
+                    Value = "Other"
+                });
+            }
+            @Html.DropDownListFor(m => m.SingleUser.Gender, genderItems, new { @class = "form-control TextboxFormat" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Email, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Email, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Email)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Username, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.SingleUser.Username, new { @class = "form-control TextboxFormat" })
+            @Html.ValidationMessageFor(m => m.SingleUser.Username)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SingleUser.Password, new { @class = "LabelFormat" })
+            @Html.PasswordFor(m => m.SingleUser.Password, new { @class = "form-control TextboxFormat", @id = "txtPassword" })
+            <div id="showPasswordTextBox">@Html.TextBoxFor(m => m.SingleUser.Password, new { @class = "form-control TextboxFormat"})</div>
+            @Html.ValidationMessageFor(m => m.SingleUser.Password)
+
+            <label for="chkShowPassword">
+                <input type="checkbox" id="chkShowPassword" />
+                Show password
+            </label>
+
+            <asp:Button ID="Button1" Text="Submit" runat="server" onclick="Button1_Click" />
+
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+            <script type="text/javascript">
+                $(function () {
+                    $("#chkShowPassword").bind("click", function () {
+                        var txtPassword = $("[id*=txtPassword]");
+                        if ($(this).is(":checked")) {
+                            txtPassword.after('<input onchange = "PasswordChanged(this);" id = "txt_' + txtPassword.attr("id") + '" type = "text" value = "' + txtPassword.val() + '" />');
+                            txtPassword.hide();
+                        } else {
+                            txtPassword.val(txtPassword.next().val());
+                            txtPassword.next().remove();
+                            txtPassword.show();
+                        }
+                    });
+                });
+                function PasswordChanged(txt) {
+                    $(txt).prev().val($(txt).val());
+                }
+            </script>
+        </div>
+        <div>
+            <p><strong><font color="purple">You only get sorted once...</font></strong></p>
+            @Html.LabelFor(m => m.SingleUser.House_ID, new { @class = "LabelFormat" })
+            @{
+                List<SelectListItem> houseItems = new List<SelectListItem>();
+                houseItems.Add(new SelectListItem
+                {
+                    Text = "",
+                    Value = ""
+                });
+                foreach (Houses house in Model.Houses)
+                {
+                    houseItems.Add(new SelectListItem
+                    {
+                        Text = house.HouseName,
+                        Value = house.House_ID.ToString()
+                    });
+                }
+            }
+            @Html.DropDownListFor(m => m.SingleUser.House_ID, houseItems, new { @class = "form-control TextboxFormat" })
+        </div>
+        <br />
+        <input type="submit" value="Register" />
+    </div>
+}

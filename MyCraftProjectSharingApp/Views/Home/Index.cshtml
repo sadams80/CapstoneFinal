@@ -1,0 +1,30 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+
+
+    <div class="text-center">
+        <h2>Welcome to the Hogwart's Crafting Page</h2>
+    </div>
+    <br />
+    <div class="text-center" style="font-size: 18px">
+        @Html.DisplayFor(m => m.SingleHouse.HouseName)
+        <p> is in the lead with </p>
+        @Html.DisplayFor(m => m.SingleHouse.Points)
+        <p> points!</p>
+    </div>
+
+    <br />
+    <br />
+    <div class="text-center" style="font-size:18px">
+        <p>
+            Earn points for your house by creating new crafts and craft projects!
+        </p>
+        <div id="homeimage">
+        </div>
+    </div>
+</div>

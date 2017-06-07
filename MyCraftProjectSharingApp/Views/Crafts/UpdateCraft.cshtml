@@ -1,0 +1,39 @@
+﻿@model MyCraftProjectSharingApp.Models.ViewModel
+@using MyCraftProjectSharingApp.Models
+@{
+    ViewBag.Title = "UpdateCraft";
+}
+
+<h2>Update Craft</h2>
+<br />
+<br />
+@using (Html.BeginForm("UpdateCraft", "Crafts", FormMethod.Post))
+{
+    if (Session["RoleId"] != null && (int)Session["UserId"] != 1)
+    {
+        if (TempData["CraftError"] != null)
+        {
+            <p><font color="red">@TempData["CraftError"].ToString()</font></p>
+        }
+        if (TempData["CraftSuccess"] != null)
+        {
+            <p><font color="red">@TempData["CraftSuccess"].ToString()</font></p>
+        }
+        @Html.HiddenFor(m => m.SingleCraft.User_ID)
+        @Html.HiddenFor(m => m.SingleCraft.Craft_ID)
+        <div>
+            <div>
+                @Html.LabelFor(m => m.SingleCraft.CraftName, new { @class = "LabelFormat" })
+                @Html.TextBoxFor(m => m.SingleCraft.CraftName, new { @class = "form-control TextboxFormat" })
+                @Html.ValidationMessageFor(m => m.SingleCraft.CraftName)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.SingleCraft.Description, new { @class = "LabelFormat" })
+                @Html.TextAreaFor(m => m.SingleCraft.Description, new { @class = "form-control TextboxFormat" })
+                @Html.ValidationMessageFor(m => m.SingleCraft.Description)
+            </div>
+            <br />
+            <input type="submit" value="Update" />
+        </div>
+    }
+}
